@@ -24,7 +24,7 @@ function are_all_states_completed() {
 
 function fillState(states){
    let index=0;
-   if(states[0]=="A"&&states[1]=="DIRTY"&&states[2]=="DIRTY")index=0;
+         if(states[0]=="A"&&states[1]=="DIRTY"&&states[2]=="DIRTY")index=0;
    else if(states[0]=="A"&&states[1]=="CLEAN"&&states[2]=="DIRTY")index=1;
    else if(states[0]=="B"&&states[1]=="CLEAN"&&states[2]=="DIRTY")index=2;
    else if(states[0]=="B"&&states[1]=="CLEAN"&&states[2]=="CLEAN")index=3;
@@ -36,7 +36,7 @@ function fillState(states){
    if(!arrayStates[index]){
       document.getElementById("log").innerHTML+="<br>&nbsp;<span style='color:gray'>&nbsp;State: ".concat(index+1)
       .concat("->").concat(" Location is: ").concat(states[0])
-      .concat(" | A is: ").concat(states[1]).concat(" | B is: ").concat(states[1]).concat("</span>");
+      .concat(" | A is: ").concat(states[1]).concat(" | B is: ").concat(states[2]).concat("</span>");
    }
    arrayStates[index]=true;
    return index;
