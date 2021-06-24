@@ -101,6 +101,7 @@ function getPosiblesMovimientos(tablero,indice,jug){
       if(tempIndex>=0&&tempIndex<=64){
         //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
+          console.log("Jugadores iguales ",indice,tempIndex);
           break;
         }else if(tablero[tempIndex]==2&&!enemigo){
           break;
@@ -121,11 +122,15 @@ function getPosiblesMovimientos(tablero,indice,jug){
 
 
 function fillingMovs(tablero,arr,jug){
+  console.log("LLENANDO JUGADOR ",jug);
   let newTablero=Object.assign([],tablero);
+  //console.log(arr);
   tempIndex=arr[0];
   
   for (var i = 0; i < 8; i++) {
     tempIndex+=arr[2];
+    //console.log("Indice Actual",tempIndex,arr[2]>0 && tempIndex<=arr[1],
+    //  arr[2]<0 && tempIndex>=arr[1]);
     if( arr[2]>0 && tempIndex<=arr[1] // si step es positivo el indice debe ser menor que el limite superior
       || arr[2]<0 && tempIndex>=arr[1]){ //si step es negativo, el indice debe ser mayor al limite inferior
       newTablero[tempIndex]=jug+'';
@@ -133,13 +138,16 @@ function fillingMovs(tablero,arr,jug){
       break;
     }
   }
+  //console.log("TABLERO NUEVO" ,newTablero);
   return newTablero;
 }
 
 function allPosibleMovements(tablero,jug){
+  console.log("buscando ",jug);
   let movimientos=[];
   for (var i = 0; i < tablero.length; i++) {
     if(tablero[i]==jug){
+      //console.log("MOV. POS., pos ",i," - x:",getX(i),"y:",getY(i),jugadores[jugador]);
       movimientos=movimientos.concat(getPosiblesMovimientos(tablero,i,jug));
       
     }
@@ -147,6 +155,7 @@ function allPosibleMovements(tablero,jug){
   console.log("retornando ", movimientos);
   return movimientos;
 }
+
 
 function iniciar(tablero,jug){
   
