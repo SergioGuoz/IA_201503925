@@ -163,6 +163,7 @@ app.get('/', (req, res) => {
   oponente=jugador==1?0:1;
   cadTablero=estado;
   convertCadToArray();
+  printTablero(board);
   let resultado =iniciar(board,jugador);
   res.send(resultado)
 })
