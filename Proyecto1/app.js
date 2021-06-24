@@ -26,6 +26,7 @@ function convertCadToArray(){
   for (var c of cadTablero) {
     board.push(c);    
   }
+  console.log(cadTablero);
 }
 
 function printTablero(tablero){
@@ -39,7 +40,7 @@ function printTablero(tablero){
     }
     cadTemp+='|'+tablero[i];      
   }
-  console.log(cadTemp);
+  console.log(indiceX,cadTemp);
 }
 
 function getOponente(jugador) {
@@ -51,8 +52,8 @@ function getY(pos){return Math.floor(pos / 8);}
 
 
 function minimax(tablero,depth,isMaximizing,indice){
-  //printTablero(tablero);
-  //console.log(isMaximizing,depth);
+  printTablero(tablero);
+  console.log(isMaximizing,depth);
   if(depth==3){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
@@ -60,6 +61,7 @@ function minimax(tablero,depth,isMaximizing,indice){
   if (isMaximizing) {
     let best=[-999,0]
     let tempMovs=allPosibleMovements(tablero,jugador);
+    if (tempMovs.length==0){return [heuristicas[indice],indice];}
     for (var item of tempMovs ) {
       let tempTablero=fillingMovs(tablero,item,jugador);
       //best=Math.max(,best)
@@ -72,6 +74,7 @@ function minimax(tablero,depth,isMaximizing,indice){
   }else{
     let best=[999,0];
     let tempMovs=allPosibleMovements(tablero,oponente);
+    if (tempMovs.length==0){return [heuristicas[indice],indice];}
     for (var item of tempMovs) {
       let tempTablero=fillingMovs(tablero,item,oponente);
       let valor=minimax(tempTablero,depth+1,true,item[1]);
@@ -86,7 +89,7 @@ function minimax(tablero,depth,isMaximizing,indice){
 
 function getPosiblesMovimientos(tablero,indice,jug){
   let tempIndex=0;
-  let step=[-1,-9,-8,7,1,9,8,7];
+  let step=[-1,-9,-8,-7,1,9,8,7];
   let movimientos=[];
   let enemigo=false;
   for (var i = 0; i < step.length; i++) { // posibles direcciones
@@ -96,9 +99,10 @@ function getPosiblesMovimientos(tablero,indice,jug){
     for (var j = 0; j < 8; j++) { // cantidad maxima de pasos maximos
       tempIndex+=step[i];
       if(tempIndex>=0&&tempIndex<=64){
+        //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
           break;
-        }if(tablero[tempIndex]==2&&!enemigo){
+        }else if(tablero[tempIndex]==2&&!enemigo){
           break;
         }else if(tablero[tempIndex]==2&&enemigo){
           movimientos.push([indice,tempIndex,step[i]]);
@@ -136,10 +140,11 @@ function allPosibleMovements(tablero,jug){
   let movimientos=[];
   for (var i = 0; i < tablero.length; i++) {
     if(tablero[i]==jug){
-      movimientos=movimientos.concat(getPosiblesMovimientos(tablero,i));
+      movimientos=movimientos.concat(getPosiblesMovimientos(tablero,i,jug));
       
     }
   }
+  console.log("retornando ", movimientos);
   return movimientos;
 }
 
@@ -148,7 +153,6 @@ function iniciar(tablero,jug){
   let valor=minimax(tablero,0,true,0);
   let cad=getX(valor[1])+''+getY(valor[1]);
   console.log("RESULTADO (",valor,getX(valor[1]),',',getY(valor[1]),')');
-  //document.body.innerHTML=cad;
 
   return cad;
   
