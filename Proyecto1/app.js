@@ -178,6 +178,7 @@ app.get('/', (req, res) => {
   convertCadToArray();
   printTablero(board);
   let resultado =iniciar(board,jugador);
+  resultado=allPosibleMovements(board,jugador)[0];
   res.send(resultado)
 })
 
