@@ -58,7 +58,7 @@ function minimax(tablero,depth,isMaximizing,indice){
     return [heuristicas[indice],indice];
   }
   if (isMaximizing) {
-    best=[-999,0]
+    let best=[-999,0]
     let tempMovs=allPosibleMovements(tablero,jugador);
     for (var item of tempMovs ) {
       let tempTablero=fillingMovs(tablero,item,jugador);
@@ -70,7 +70,7 @@ function minimax(tablero,depth,isMaximizing,indice){
     console.log('Finalizando iteracion max',best);
     return best;
   }else{
-    best=[999,0];
+    let best=[999,0];
     let tempMovs=allPosibleMovements(tablero,oponente);
     
     for (var item of tempMovs) {
