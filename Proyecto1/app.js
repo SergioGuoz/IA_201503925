@@ -72,13 +72,12 @@ function minimax(tablero,depth,isMaximizing,indice){
   }else{
     let best=[999,0];
     let tempMovs=allPosibleMovements(tablero,oponente);
-    
     for (var item of tempMovs) {
       let tempTablero=fillingMovs(tablero,item,oponente);
       let valor=minimax(tempTablero,depth+1,true,item[1]);
       best=valor[0]<best[0]?valor:best;
     }
-    console.log('Finalizando iteracion MIN',depth);
+    console.log('Finalizando iteracion MIN',best);
 
     return best;
   }
@@ -138,9 +137,9 @@ function allPosibleMovements(tablero,jug){
   for (var i = 0; i < tablero.length; i++) {
     if(tablero[i]==jug){
       movimientos=movimientos.concat(getPosiblesMovimientos(tablero,i));
+      
     }
   }
-  console.log("retornando ", movimientos);
   return movimientos;
 }
 
