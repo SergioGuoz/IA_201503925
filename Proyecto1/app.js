@@ -53,16 +53,18 @@ function getY(pos){return Math.floor(pos / 8);}
 
 
 function minimax(tablero,depth,isMaximizing,indice){
-  printTablero(tablero);
-  console.log(isMaximizing,"profundidad ",depth);
+  //printTablero(tablero);
+  //console.log(isMaximizing,"profundidad ",depth);
   if(depth==3){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
   }
   if (isMaximizing) {
     let best=[-999,0]
+    
     let tempMovs=allPosibleMovements(tablero,jugador);
     let indexBest=0;
+    
     if (tempMovs.length==0){return [heuristicas[indice],indice];}
     for (var item of tempMovs ) {
       let tempTablero=fillingMovs(tablero,item,jugador);
@@ -70,10 +72,10 @@ function minimax(tablero,depth,isMaximizing,indice){
       let valor=minimax(tempTablero,depth+1,false,item[1]);
       if(valor[0]>best[0]) indexBest=item[1]; // si es el mejor, asignar el indice  
       best=valor[0]>best[0]?valor:best;
-      if(depth==0){console.log("depth0 ",best,item);}
     }
-    if(depth==0){best[1]=indexBest;console.log(" Finalizando heuristica ",best, "valor indice ",indexBest );}
-    console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
+    if(depth==0){ console.log("Movimientos depth 0 ",tempMovs); console.log("depth0 mejor",best,item);}
+    if(depth==0){best[1]=indexBest;console.log(" Finalizando heuristica,index",best, "valor indice ",indexBest );}
+    //console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
     return best;
   }else{
     let best=[999,0];
@@ -84,7 +86,7 @@ function minimax(tablero,depth,isMaximizing,indice){
       let valor=minimax(tempTablero,depth+1,true,item[1]);
       best=valor[0]<best[0]?valor:best;
     }
-    console.log('Finalizando iteracion MIN',best,'profundidad',depth,"jugador",oponente);
+    //console.log('Finalizando iteracion MIN',best,'profundidad',depth,"jugador",oponente);
 
     return best;
   }
@@ -116,7 +118,7 @@ function getPosiblesMovimientos(tablero,indice,jug){
       if(tempIndex>=0&&tempIndex<=64){
         //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
-          console.log("Jugadores iguales ",indice,tempIndex);
+          //console.log("Jugadores iguales ",indice,tempIndex);
           break;
         }else if(tablero[tempIndex]==2&&!enemigo){
           break;
