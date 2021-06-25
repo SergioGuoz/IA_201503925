@@ -161,7 +161,7 @@ function iniciar(tablero,jug){
   
   let valor=minimax(tablero,0,true,0);
   let cad=getX(valor[1])+''+getY(valor[1]);
-  console.log("RESULTADO (",valor,getX(valor[1]),',',getY(valor[1]),')');
+  console.log("RESULTADO (",valor,getY(valor[1]),',',getX(valor[1]),')');
 
   return cad;
   
@@ -177,10 +177,7 @@ app.get('/', (req, res) => {
   cadTablero=estado;
   convertCadToArray();
   printTablero(board);
-  let resultado =iniciar(board,jugador);
-  resultado=allPosibleMovements(board,jugador)[0]
-  let temp= getX(resultado[1])+''+getY(resultado[1]);
-  
+  let resultado =iniciar(board,jugador);  
   res.send(temp)
 })
 
