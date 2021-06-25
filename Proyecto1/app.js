@@ -177,6 +177,8 @@ app.get('/', (req, res) => {
   convertCadToArray();
   printTablero(board);
   let resultado =iniciar(board,jugador);  
+  console.log(jugador,"oponente: ",oponente);
+
   res.send(resultado)
 })
 
