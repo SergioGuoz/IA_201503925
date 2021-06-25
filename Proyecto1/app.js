@@ -102,7 +102,6 @@ function getPosiblesMovimientos(tablero,indice,jug){
       if(tempIndex>=0&&tempIndex<=64){
         //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
-          console.log("Jugadores iguales ",indice,tempIndex);
           break;
         }else if(tablero[tempIndex]==2&&!enemigo){
           break;
@@ -123,7 +122,6 @@ function getPosiblesMovimientos(tablero,indice,jug){
 
 
 function fillingMovs(tablero,arr,jug){
-  console.log("LLENANDO JUGADOR ",jug);
   let newTablero=Object.assign([],tablero);
   //console.log(arr);
   tempIndex=arr[0];
@@ -178,9 +176,12 @@ app.get('/', (req, res) => {
   convertCadToArray();
   printTablero(board);
   let resultado =iniciar(board,jugador);  
+  let s= allPosibleMovements(board,jugador);
+  let cad= getY(s[0][1])+''+getX(s[0][1]);
+  console.log("Final");
   console.log(jugador,"oponente: ",oponente);
 
-  res.send(resultado)
+  res.send(cad)
 })
 
 app.listen(port, () => {
