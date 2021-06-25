@@ -178,7 +178,7 @@ app.get('/', (req, res) => {
   let resultado =iniciar(board,jugador);  
   let s= allPosibleMovements(board,jugador);
   let cad= getY(s[0][1])+''+getX(s[0][1]);
-  console.log("Final");
+  console.log("Final ",cad);
   console.log(jugador,"oponente: ",oponente);
 
   res.send(cad)
