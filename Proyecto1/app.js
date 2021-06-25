@@ -56,7 +56,7 @@ function getY(pos){return Math.floor(pos / 8);}
 function minimax(tablero,depth,isMaximizing,indice){
   //printTablero(tablero);
   //console.log(isMaximizing,"profundidad ",depth);
-  if(depth==1){
+  if(depth==3){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
   }
