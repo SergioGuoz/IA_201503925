@@ -142,7 +142,7 @@ function fillingMovs(tablero,arr,jug){
 }
 
 function allPosibleMovements(tablero,jug){
-  console.log("buscando ",jug);
+  
   let movimientos=[];
   for (var i = 0; i < tablero.length; i++) {
     if(tablero[i]==jug){
@@ -176,12 +176,12 @@ app.get('/', (req, res) => {
   convertCadToArray();
   printTablero(board);
   let resultado =iniciar(board,jugador);  
-  let s= allPosibleMovements(board,jugador);
-  let cad= getY(s[0][1])+''+getX(s[0][1]);
-  console.log("Final ",cad);
+  //let s= allPosibleMovements(board,jugador);
+  //let cad= getY(s[0][1])+''+getX(s[0][1]);
+  //console.log("Final ",cad);
   console.log(jugador,"oponente: ",oponente);
 
-  res.send(cad)
+  res.send(resultado)
 })
 
 app.listen(port, () => {
