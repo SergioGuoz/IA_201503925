@@ -91,20 +91,32 @@ function minimax(tablero,depth,isMaximizing,indice){
 }
 
 
+
 function getPosiblesMovimientos(tablero,indice,jug){
   let tempIndex=0;
   let step=[-1,-9,-8,-7,1,9,8,7];
+  let dir=[-1,-1,0,1,1,1,2,-1];
   let movimientos=[];
+  let maxLeft=0;
+  let maxUp=0;
+
+  let maxX=getX(indice);
+  let maxY=getY(indice);
+  let indexX=0;
+  let indexY=0;
   let enemigo=false;
+  let maxMovs=0;
+
   for (var i = 0; i < step.length; i++) { // posibles direcciones
     enemigo=false;
-    tempIndex=indice
-
-    for (var j = 0; j < 8; j++) { // cantidad maxima de pasos maximos
+    tempIndex=indice;
+    maxMovs=dir[i]==-1?maxX-1:(dir[i]==1?8-maxX:(dir[i]==0?maxY:8-maxY));
+    for (var j = 0; j < maxMovs ; j++) { // cantidad maxima de pasos maximos
       tempIndex+=step[i];
       if(tempIndex>=0&&tempIndex<=64){
         //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
+          console.log("Jugadores iguales ",indice,tempIndex);
           break;
         }else if(tablero[tempIndex]==2&&!enemigo){
           break;
@@ -117,6 +129,8 @@ function getPosiblesMovimientos(tablero,indice,jug){
       }else{
         break;
       }
+      indexX++;
+      indexY++;
     }
   }
 
