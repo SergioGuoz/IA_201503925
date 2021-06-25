@@ -24,6 +24,7 @@ var cadTablero=''
 var board=[];
 
 function convertCadToArray(){
+  board=[];
   for (var c of cadTablero) {
     board.push(c);    
   }
