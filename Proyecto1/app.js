@@ -178,7 +178,7 @@ app.get('/', (req, res) => {
   convertCadToArray();
   printTablero(board);
   let resultado =iniciar(board,jugador);  
-  res.send(temp)
+  res.send(resultado)
 })
 
 app.listen(port, () => {
