@@ -52,8 +52,6 @@ function getY(pos){return Math.floor(pos / 8);}
 
 
 function minimax(tablero,depth,isMaximizing,indice){
-  printTablero(tablero);
-  console.log(isMaximizing,depth);
   if(depth==3){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
@@ -61,15 +59,16 @@ function minimax(tablero,depth,isMaximizing,indice){
   if (isMaximizing) {
     let best=[-999,0]
     let tempMovs=allPosibleMovements(tablero,jugador);
+    let indexBest=0;
     if (tempMovs.length==0){return [heuristicas[indice],indice];}
     for (var item of tempMovs ) {
       let tempTablero=fillingMovs(tablero,item,jugador);
-      //best=Math.max(,best)
-      let valor=minimax(tempTablero,depth+1,false,item[1])
+      let valor=minimax(tempTablero,depth+1,false,item[1]);
+      if(valor[0]>best[0]) indexBest=item[1]; // si es el mejor, asignar el indice  
       best=valor[0]>best[0]?valor:best;
-      
     }
-    console.log('Finalizando iteracion max',best);
+    if(depth==0){best[1]=indexBest;}
+    console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
     return best;
   }else{
     let best=[999,0];
@@ -80,12 +79,11 @@ function minimax(tablero,depth,isMaximizing,indice){
       let valor=minimax(tempTablero,depth+1,true,item[1]);
       best=valor[0]<best[0]?valor:best;
     }
-    console.log('Finalizando iteracion MIN',best);
+    console.log('Finalizando iteracion MIN',best,'profundidad',depth,"jugador",oponente);
 
     return best;
   }
 }
-
 
 function getPosiblesMovimientos(tablero,indice,jug){
   let tempIndex=0;
