@@ -160,7 +160,7 @@ function allPosibleMovements(tablero,jug){
 function iniciar(tablero,jug){
   
   let valor=minimax(tablero,0,true,0);
-  let cad=getX(valor[1])+''+getY(valor[1]);
+  let cad=getY(valor[1])+''+getX(valor[1]);
   console.log("RESULTADO (",valor,getY(valor[1]),',',getX(valor[1]),')');
 
   return cad;
