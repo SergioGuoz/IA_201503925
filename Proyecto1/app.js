@@ -52,6 +52,8 @@ function getY(pos){return Math.floor(pos / 8);}
 
 
 function minimax(tablero,depth,isMaximizing,indice){
+  printTablero(tablero);
+  console.log(isMaximizing,"profundidad ",depth);
   if(depth==3){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
@@ -68,7 +70,7 @@ function minimax(tablero,depth,isMaximizing,indice){
       best=valor[0]>best[0]?valor:best;
       if(depth==0){console.log("depth0 ",best,item);}
     }
-    if(depth==0){best[1]=indexBest;}
+    if(depth==0){best[1]=indexBest;console.log(" Finalizando heuristica ",best, "valor indice ",indexBest );}
     console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
     return best;
   }else{
@@ -154,7 +156,6 @@ function allPosibleMovements(tablero,jug){
   console.log("retornando ", movimientos);
   return movimientos;
 }
-
 
 function iniciar(tablero,jug){
   
