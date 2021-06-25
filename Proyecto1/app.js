@@ -66,6 +66,7 @@ function minimax(tablero,depth,isMaximizing,indice){
       let valor=minimax(tempTablero,depth+1,false,item[1]);
       if(valor[0]>best[0]) indexBest=item[1]; // si es el mejor, asignar el indice  
       best=valor[0]>best[0]?valor:best;
+      if(depth==0){console.log("depth0 ",best,item);}
     }
     if(depth==0){best[1]=indexBest;}
     console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
