@@ -56,7 +56,7 @@ function getY(pos){return Math.floor(pos / 8);}
 function minimax(tablero,depth,isMaximizing,indice){
   //printTablero(tablero);
   //console.log(isMaximizing,"profundidad ",depth);
-  if(depth==3){
+  if(depth==1){
     console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
   }
@@ -64,18 +64,21 @@ function minimax(tablero,depth,isMaximizing,indice){
     let best=[-999,0]
     
     let tempMovs=allPosibleMovements(tablero,jugador);
-    let indexBest=0;
+    let indexBest=[0,0]; // origen, destino
     
     if (tempMovs.length==0){return [heuristicas[indice],indice];}
     for (var item of tempMovs ) {
       let tempTablero=fillingMovs(tablero,item,jugador);
-      //best=Math.max(,best)
+
       let valor=minimax(tempTablero,depth+1,false,item[1]);
-      if(valor[0]>best[0]) indexBest=item[1]; // si es el mejor, asignar el indice  
+      if(valor[0]>best[0]) indexBest=item; // si es el mejor, asignar el indice  
       best=valor[0]>best[0]?valor:best;
     }
-    if(depth==0){ console.log("Movimientos depth 0 ",tempMovs); console.log("depth0 mejor",best,item);}
-    if(depth==0){best[1]=indexBest;console.log(" Finalizando heuristica,index",best, "valor indice ",indexBest );}
+    if(depth==0){
+      best[1]=indexBest[1];
+      console.log("Movimientos depth 0 ",tempMovs);
+      console.log(" Finalizando Mejor (heuristica,indexDestino)",best, "DE: origen, destino,direccion ",indexBest );
+    }
     //console.log('Finalizando iteracion max',best,'profundidad',depth,"jugador", jugador);
     return best;
   }else{
@@ -113,7 +116,17 @@ function getPosiblesMovimientos(tablero,indice,jug){
   for (var i = 0; i < step.length; i++) { // posibles direcciones
     enemigo=false;
     tempIndex=indice;
-    maxMovs=dir[i]==-1?maxX-1:(dir[i]==1?8-maxX:(dir[i]==0?maxY:8-maxY));
+    //maxMovs=dir[i]==-1?maxX:(dir[i]==1?8-maxX:(dir[i]==0?maxY:8-maxY));
+    if(step[i]==-1) maxMovs=maxX;
+    else if(step[i]==-9) maxMovs=Math.min(maxX,maxY);
+    else if(step[i]==-8) maxMovs=maxY;
+    else if(step[i]==-7) maxMovs=Math.min(7-maxX,maxY);
+    else if(step[i]==1) maxMovs=7-maxX;
+    else if(step[i]==9) maxMovs=Math.min((7-maxX),(7-maxY));
+    else if(step[i]==8) maxMovs=7-maxY;
+    else if(step[i]==7) maxMovs=Math.min(maxX,7-maxY);
+
+    console.log("Limite movs for:",indice," cant. ",maxMovs," step: ",step[i]," dir:",dir[i]);
     for (var j = 0; j < maxMovs ; j++) { // cantidad maxima de pasos maximos
       tempIndex+=step[i];
       if(tempIndex>=0&&tempIndex<=64){
