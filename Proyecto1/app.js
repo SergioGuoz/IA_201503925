@@ -57,23 +57,30 @@ function minimax(tablero,depth,isMaximizing,indice){
   //printTablero(tablero);
   //console.log(isMaximizing,"profundidad ",depth);
   if(depth==3){
-    console.log("RET ",indice,heuristicas[indice]);
+    //console.log("RET ",indice,heuristicas[indice]);
     return [heuristicas[indice],indice];
   }
   if (isMaximizing) {
-    let best=[-999,0]
+    let best=[-999,0] // heuristica, indiceDestino
     
     let tempMovs=allPosibleMovements(tablero,jugador);
     let indexBest=[0,0]; // origen, destino
     
     if (tempMovs.length==0){return [heuristicas[indice],indice];}
-    for (var item of tempMovs ) {
-      let tempTablero=fillingMovs(tablero,item,jugador);
 
-      let valor=minimax(tempTablero,depth+1,false,item[1]);
+    for (var item of tempMovs ) {
+
+      if(depth==0 && heuristicas[item[1]]==120){ return [heuristicas[item[1]],item[1]]; } // si tiene el mejor movimiento lo retorna
+
+      let tempTablero=fillingMovs(tablero,item,jugador); // llena la tabla temporal de movimientos
+
+      let valor=minimax(tempTablero,depth+1,false,item[1]); // obtiene el valor minimo
       if(valor[0]>best[0]) indexBest=item; // si es el mejor, asignar el indice  
-      best=valor[0]>best[0]?valor:best;
+      best=valor[0]>best[0]?valor:best; // se guarda la mejor heuristica
+
+      if(depth==0){ console.log("mov (origen,destino,direccion):", item, "heuristica ", valor[0]); }
     }
+
     if(depth==0){
       best[1]=indexBest[1];
       console.log("Movimientos depth 0 ",tempMovs);
@@ -126,10 +133,12 @@ function getPosiblesMovimientos(tablero,indice,jug){
     else if(step[i]==8) maxMovs=7-maxY;
     else if(step[i]==7) maxMovs=Math.min(maxX,7-maxY);
 
-    console.log("Limite movs for:",indice," cant. ",maxMovs," step: ",step[i]," dir:",dir[i]);
+    //console.log("Limite movs for:",indice," cant. ",maxMovs," step: ",step[i]," dir:",dir[i]);
     for (var j = 0; j < maxMovs ; j++) { // cantidad maxima de pasos maximos
       tempIndex+=step[i];
+
       if(tempIndex>=0&&tempIndex<=64){
+        if(tempIndex==0 && enemigo && tablero[tempIndex]==2) console.log('------------> ',indice, heuristicas[tempIndex]);
         //console.log(tablero[tempIndex],jug);
         if(tablero[tempIndex]==jug){
           //console.log("Jugadores iguales ",indice,tempIndex);
